@@ -23,7 +23,6 @@ module.exports = {
       _constants: 'src/constants',
       _containers: 'src/containers',
       _icons: 'src/components/icons',
-      _intl: 'src/intl',
       _listeners: 'src/redux/listeners',
       _redux: 'src/redux',
       _reducers: 'src/redux/reducers',
