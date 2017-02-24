@@ -1,20 +1,46 @@
 import React, { PropTypes } from 'react'
+import { CompletedIcon, UncompletedIcon, DeleteIcon } from '_icons'
 
-const Todo = ({ onClick, completed, text }) => (
-  <li
-    onClick={onClick}
-    style={{
-      textDecoration: completed ? 'line-through' : 'none'
-    }}
-  >
-    {text}
+const Todo = ({ text, completed, onTodoClick, toggleTodo, removeTodo }) => (
+  <li className={'todo-item'+ (completed ? ' completed' : '')} >
+
+    <button
+      className={'icon-btn btn-complete'} title={'Clik it when task has been done'}
+      onClick={toggleTodo}
+    >
+      {completed ? <CompletedIcon/> : <UncompletedIcon/>}
+    </button>
+
+    <p
+      className={'todo-text'} title={'Click here to start timer'}
+      onClick={onTodoClick}
+    >
+      {text}
+    </p>
+
+    <p
+      className={'todo-counter'} title={'Time spent for the task'}
+      onClick={onTodoClick}
+    >
+      {'00:00'}
+    </p>
+
+    <button
+      className={'icon-btn btn-delete'}  title={'Clik it to remove task'}
+      onClick={removeTodo}
+    >
+      {<DeleteIcon/>}
+    </button>
+
   </li>
 )
 
 Todo.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired
+  onTodoClick: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired,
 }
 
 export default Todo

@@ -4,8 +4,9 @@ html, body {
 body {
   position: relative;
   font-family: sans-serif;
-  background-color: #f9f9f9;
+  background-color: #fafafa;
   margin: 0;
+  color: #444;
 }
 body * {
   box-sizing: border-box;
@@ -18,12 +19,138 @@ body * {
   clear: both;
 }
 #without_js {
-  max-width: 600px;
-  margin: 36px auto;
   background-color: #fff777;
   border: 3px dashed #000;
   padding: 16px 36px;
   border-radius: 5px;
   text-align: center;
   line-height: 26px;
+}
+h2 {
+  font-size: 50px;
+  text-align: center;
+  margin: 0;
+  margin-top: 20px;
+  color: #fafafa;
+  text-shadow: 0 1px 5px #555;
+}
+#root {
+  max-width: 800px;
+  padding: 12px 18px;
+  margin: 24px auto;
+  box-shadow: 0 1px 5px #ccc;
+  border-radius: 2px;
+  background-color: #fff;
+}
+.todo-list {
+  list-style-type: none;
+  padding: 6px 0;
+  margin: 6px 0;
+}
+.form-input,
+.btn {
+  border: none;
+  background-color: transparent;
+  box-shadow: 0 1px 5px #ccc;
+  border-radius: 2px;
+  margin: 6px 10px;
+  padding: 6px 10px;
+  outline: none;
+  font-size: 18px;
+  border: none;
+  vertical-align: bottom;
+  color: #444;
+}
+.submit {
+  margin-right: 0;
+}
+.icon-btn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  margin: auto 0;
+  padding: 0;
+  outline: none;
+}
+.btn-delete {
+  right: 0;
+}
+.form-input {
+  box-shadow: 0 1px 5px #ccc inset;
+  width: calc(100% - 108px);
+  margin-left: 0;
+  margin-right: 0;
+}
+.btn:hover {
+  background-color: #f5fdff;
+}
+.btn:active {
+  padding-top: 8px;
+  padding-bottom: 4px;
+}
+.active,
+.active:hover,
+.active:active {
+  border: 1px solid #ace;
+  background-color: #fff;
+  font-size: 20px;
+  padding: 6px 10px;
+}
+.footer {
+  margin-bottom: 0;
+  width: 420px;
+  margin: 10px auto 0;
+}
+.footer .btn {
+  width: 120px;
+  text-align: center;
+}
+.todo-item {
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+.todo-item:first-child {
+  border-top: 1px solid #eee;
+}
+.todo-item:nth-child(2n) {
+  background-color: #fbfbfb;
+}
+.todo-text {
+  margin: 0;
+  margin-left: 40px;
+  padding: 10px 134px 10px 10px;
+  min-height: 44px;
+  font-size: 20px;
+  line-height: 27px;
+}
+.todo-counter {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  top: 0;
+  right: 40px;
+  bottom: 0;
+  margin: auto 5px;
+  border: 2px solid #e8e8e8;
+  border-radius: 5px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 36px;
+}
+.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+.btn-delete {
+  fill: #444;
+}
+.btn-delete:active {
+  box-shadow: 0 1px 5px #ccc inset;
+}
+.completed .btn-delete {
+  fill: #888;
 }

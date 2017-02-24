@@ -16,11 +16,14 @@ let AddTodo = ({ dispatch }) => {
           input.value = ''
         }}
       >
-        <input ref={node => {
+        <input
+          ref={node => {
             input = node
           }}
+          className={'form-input'}
+          placeholder={'What need to be done?'}
         />
-        <button type="submit">
+        <button type="submit" className={'btn submit'}>
           Add Todo
         </button>
       </form>

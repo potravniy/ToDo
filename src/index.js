@@ -1,11 +1,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import todoApp from '_reducers'
+import createStore from '_redux/createStore'
 import App from '_components/App'
 
-let store = createStore(todoApp)
+const store = createStore()
 
 render(
   <Provider store={store}>
@@ -13,3 +12,4 @@ render(
   </Provider>,
   document.getElementById('root')
 )
+
