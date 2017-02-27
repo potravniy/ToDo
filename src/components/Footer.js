@@ -6,11 +6,14 @@ const Footer = () => (
     <FilterLink filter="SHOW_ALL">
       All
     </FilterLink>
-    <FilterLink filter="SHOW_ACTIVE">
-      Active
+    <FilterLink filter="SHOW_UNCOMPLETED">
+      Incomplete
     </FilterLink>
     <FilterLink filter="SHOW_COMPLETED">
       Completed
+    </FilterLink>
+    <FilterLink filter="SHOW_ACTIVE">
+      Active
     </FilterLink>
   </div>
 )

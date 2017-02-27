@@ -38,14 +38,16 @@ export const startDoTodo = (id) => {
   }
 }
 
-export const stopDoTodo = (id) => {
+export const stopDoTodo = (id, elapsedTime) => {
   return {
     type: STOP_DO_TODO,
-    id
+    id,
+    elapsedTime
   }
 }
 
 export const setVisibilityFilter = (filter) => {
+
   return {
     type: SET_VISIBILITY_FILTER,
     filter

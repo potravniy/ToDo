@@ -2,7 +2,6 @@ import {
   ADD_TODO,
   TOGGLE_TODO,
   REMOVE_TODO,
-  START_DO_TODO,
   STOP_DO_TODO
  } from '_constants/actions'
 
@@ -13,13 +12,20 @@ const todo = (state = {}, action) => {
       return {
         id: action.id,
         text: action.text,
-        completed: false
+        completed: false,
+        elapsedTime: 0
       }
 
     case TOGGLE_TODO:
       return {
         ...state,
         completed: !state.completed
+      }
+
+    case STOP_DO_TODO:
+      return {
+        ...state,
+        elapsedTime: action.elapsedTime
       }
 
     default:
@@ -30,13 +36,14 @@ const todo = (state = {}, action) => {
 const todos = (state = [], action) => {
   switch (action.type) {
 
-    case 'ADD_TODO':
+    case ADD_TODO:
       return [
         ...state,
         todo(undefined, action)
       ]
 
     case TOGGLE_TODO:
+    case STOP_DO_TODO:
       return state.map(t =>
         t.id === action.id ? todo(t, action) : t
       )

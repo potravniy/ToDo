@@ -61,6 +61,9 @@ h2 {
   vertical-align: bottom;
   color: #444;
 }
+.btn {
+  cursor: pointer;
+}
 .submit {
   margin-right: 0;
 }
@@ -75,6 +78,7 @@ h2 {
   margin: auto 0;
   padding: 0;
   outline: none;
+  cursor: pointer;
 }
 .btn-delete {
   right: 0;
@@ -99,10 +103,11 @@ h2 {
   background-color: #fff;
   font-size: 20px;
   padding: 6px 10px;
+  cursor: auto;
 }
 .footer {
   margin-bottom: 0;
-  width: 420px;
+  width: 561px;
   margin: 10px auto 0;
 }
 .footer .btn {
@@ -126,10 +131,11 @@ h2 {
   min-height: 44px;
   font-size: 20px;
   line-height: 27px;
+  cursor: pointer
 }
 .todo-counter {
   position: absolute;
-  width: 80px;
+  width: 120px;
   height: 40px;
   top: 0;
   right: 40px;
@@ -137,13 +143,19 @@ h2 {
   margin: auto 5px;
   border: 2px solid #e8e8e8;
   border-radius: 5px;
+  font-family: monospace;
   font-size: 20px;
   text-align: center;
   line-height: 36px;
+  cursor: pointer;
+}
+.uncompleted {
+  fill: #ccc;
 }
 .completed {
   text-decoration: line-through;
   color: #888;
+  fill: #afa;
 }
 .btn-delete {
   fill: #444;

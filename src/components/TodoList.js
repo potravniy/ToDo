@@ -1,15 +1,23 @@
 import React, { PropTypes } from 'react'
 import Todo from '_components/Todo'
 
-const TodoList = ({ todos, onTodoClick, toggleTodo, removeTodo }) => (
+const TodoList = ({
+  todos,
+  onTimerClick,
+  toggleTodo,
+  removeTodo,
+  activeTodoId,
+  elapsedTime
+}) => (
   <ul className={'todo-list'} >
     {todos.map(todo =>
       <Todo
         key={todo.id}
-        onTodoClick={() => onTodoClick(todo.id)}
+        onTimerClick={() => onTimerClick(todo.id)}
         toggleTodo={() => toggleTodo(todo.id)}
         removeTodo={() => removeTodo(todo.id)}
         {...todo}
+        elapsedTime={ activeTodoId === todo.id ? elapsedTime : todo.elapsedTime }
       />
     )}
   </ul>
@@ -21,9 +29,11 @@ TodoList.propTypes = {
     completed: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
-  onTodoClick: PropTypes.func.isRequired,
+  onTimerClick: PropTypes.func.isRequired,
   toggleTodo: PropTypes.func.isRequired,
-  removeTodo: PropTypes.func.isRequired
+  removeTodo: PropTypes.func.isRequired,
+  activeTodoId: PropTypes.number,
+  elapsedTime: PropTypes.number
 }
 
 export default TodoList
