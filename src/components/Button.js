@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const Link = ({ active, children, onClick }) => {
+const Button = ({ active, children, onClick }) => {
 
   return (
     <button className={active ? 'btn active' : 'btn'}
@@ -14,10 +14,10 @@ const Link = ({ active, children, onClick }) => {
   )
 }
 
-Link.propTypes = {
+Button.propTypes = {
   active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired
 }
 
-export default Link
+export default Button

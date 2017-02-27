@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { setVisibilityFilter } from '_actions'
-import Link from '_components/Link'
+import Button from '_components/Button'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const FilterLink = connect(
+const FilterButton = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Link)
+)(Button)
 
-export default FilterLink
+export default FilterButton

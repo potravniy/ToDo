@@ -1,20 +1,20 @@
 import React from 'react'
-import FilterLink from '_containers/FilterLink'
+import FilterButton from '_containers/FilterButton'
 
 const Footer = () => (
   <div className={'footer'}>
-    <FilterLink filter="SHOW_ALL">
+    <FilterButton filter="SHOW_ALL">
       All
-    </FilterLink>
-    <FilterLink filter="SHOW_UNCOMPLETED">
+    </FilterButton>
+    <FilterButton filter="SHOW_UNCOMPLETED">
       Incomplete
-    </FilterLink>
-    <FilterLink filter="SHOW_COMPLETED">
+    </FilterButton>
+    <FilterButton filter="SHOW_COMPLETED">
       Completed
-    </FilterLink>
-    <FilterLink filter="SHOW_ACTIVE">
+    </FilterButton>
+    <FilterButton filter="SHOW_ACTIVE">
       Active
-    </FilterLink>
+    </FilterButton>
   </div>
 )
 

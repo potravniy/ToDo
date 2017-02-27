@@ -8,7 +8,8 @@ const Todo = ({
   onTimerClick,
   toggleTodo,
   removeTodo,
-  elapsedTime
+  elapsedTime,
+  active
 }) => {
   const elapsed = moment.duration(elapsedTime)
   const timeString = moment.utc(elapsedTime).format("HH:mm:ss")
@@ -32,7 +33,7 @@ const Todo = ({
     </p>
 
     <p
-      className={'todo-counter'}
+      className={'todo-counter'+ (active ? ' run' : '')}
       title={'Time spent for the task'}
       onClick={onTimerClick}
     >
@@ -56,7 +57,8 @@ Todo.propTypes = {
   onTimerClick: PropTypes.func.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   removeTodo: PropTypes.func.isRequired,
-  elapsedTime: PropTypes.number.isRequired
+  elapsedTime: PropTypes.number.isRequired,
+  active: PropTypes.bool.isRequired
 }
 
 export default Todo

@@ -149,13 +149,18 @@ h2 {
   line-height: 36px;
   cursor: pointer;
 }
+.todo-counter.run {
+  font-weight: bold;
+  background-color: #dfd;
+  border-color: #6f6;
+}
 .uncompleted {
   fill: #ccc;
 }
 .completed {
   text-decoration: line-through;
   color: #888;
-  fill: #afa;
+  fill: #8f8;
 }
 .btn-delete {
   fill: #444;
