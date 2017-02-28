@@ -1,26 +1,26 @@
 import React, { PropTypes } from 'react'
-import moment from 'moment'
-import { CompletedIcon, UncompletedIcon, DeleteIcon } from '_icons'
+
+import Timer from '_containers/Timer'
+import {
+  CompletedIcon,
+  UncompletedIcon,
+  DeleteIcon
+} from '_icons'
 
 const Todo = ({
+  id,
   text,
   completed,
-  onTimerClick,
-  toggleTodo,
-  removeTodo,
   elapsedTime,
-  active
-}) => {
-  const elapsed = moment.duration(elapsedTime)
-  const timeString = moment.utc(elapsedTime).format("HH:mm:ss")
-  // console.log('Todo elapsedTime: ', timeString)
-  return (
+  toggleTodo,
+  removeTodo
+}) => (
   <li className={'todo-item'+ (completed ? ' completed' : '')} >
 
     <button
       className={'icon-btn btn-complete'}
       title={'Clik it when task has been done'}
-      onClick={toggleTodo}
+      onClick={() => toggleTodo(id)}
     >
       {completed ? <CompletedIcon/> : <UncompletedIcon/>}
     </button>
@@ -32,33 +32,30 @@ const Todo = ({
       <span className="text">{text}</span>
     </p>
 
-    <p
-      className={'todo-counter'+ (active ? ' run' : '')}
-      title={'Time spent for the task'}
-      onClick={onTimerClick}
-    >
-      {timeString}
-    </p>
+    <Timer
+      id={id}
+      elapsedTime={elapsedTime}
+      completed={completed}
+    />
 
     <button
       className={'icon-btn btn-delete'}
       title={'Clik it to remove task'}
-      onClick={removeTodo}
+      onClick={() => removeTodo(id)}
     >
       {<DeleteIcon/>}
     </button>
 
   </li>
-)}
+)
 
 Todo.propTypes = {
+  id: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired,
-  onTimerClick: PropTypes.func.isRequired,
-  toggleTodo: PropTypes.func.isRequired,
-  removeTodo: PropTypes.func.isRequired,
   elapsedTime: PropTypes.number.isRequired,
-  active: PropTypes.bool.isRequired
+  toggleTodo: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired
 }
 
 export default Todo

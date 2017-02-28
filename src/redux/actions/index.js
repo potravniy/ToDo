@@ -7,12 +7,9 @@ import {
   SET_VISIBILITY_FILTER
  } from '_constants/actions'
 
-let nextTodoId = 0
-
 export const addTodo = (text) => {
   return {
     type: ADD_TODO,
-    id: nextTodoId++,
     text
   }
 }

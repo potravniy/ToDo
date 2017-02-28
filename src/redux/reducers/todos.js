@@ -1,3 +1,5 @@
+import getUniqId from '_utils/getUniqId'
+import initialState from '_redux/initialState'
 import { 
   ADD_TODO,
   TOGGLE_TODO,
@@ -7,14 +9,6 @@ import {
 
 const todo = (state = {}, action) => {
   switch (action.type) {
-
-    case ADD_TODO:
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false,
-        elapsedTime: 0
-      }
 
     case TOGGLE_TODO:
       return {
@@ -33,13 +27,20 @@ const todo = (state = {}, action) => {
   }
 }
 
-const todos = (state = [], action) => {
+const init = (initialState && initialState.todos) || []
+
+const todos = (state = init, action) => {
   switch (action.type) {
 
     case ADD_TODO:
       return [
         ...state,
-        todo(undefined, action)
+        {
+          id: getUniqId(state) ,
+          text: action.text,
+          completed: false,
+          elapsedTime: 0
+        }
       ]
 
     case TOGGLE_TODO:

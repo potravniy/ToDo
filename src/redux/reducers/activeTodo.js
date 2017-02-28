@@ -1,22 +1,43 @@
+import { isNull } from 'lodash'
+
+import initialState from '_redux/initialState'
 import { START_DO_TODO, STOP_DO_TODO } from '_constants/actions'
 
-const initialState = {
+const defaultState = {
   id: null,
-  startTime: 0
+  startTime: 0,
+  nextActiveTodoId: null
 }
+const init = (initialState && initialState.activeTodo) || defaultState
 
-const activeTodo = (state = initialState, action) => {
+const activeTodo = (state = init, action) => {
 
   switch (action.type) {
 
     case START_DO_TODO:
-      return {
-        id: action.id,
-        startTime: parseInt(Date.now())
+      if(isNull(state.id)){
+        return {
+          id: action.id,
+          startTime: Date.now(),
+          nextActiveTodoId: null
+        }
+      } else {
+        return {
+          ...state,
+          nextActiveTodoId: action.id
+        }
       }
 
     case STOP_DO_TODO:
-      return initialState
+      if(isNull(state.nextActiveTodoId)){
+         return defaultState
+      } else {
+        return {
+          id: state.nextActiveTodoId,
+          startTime: Date.now(),
+          nextActiveTodoId: null
+        }
+      }
 
     default:
       return state
