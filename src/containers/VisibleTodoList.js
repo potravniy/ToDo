@@ -1,14 +1,25 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { isNull, findIndex } from 'lodash'
-import { toggleTodo, removeTodo } from '_actions'
+import { toggleTodo, removeTodo, reorderTodos } from '_actions'
 import TodoList from '_components/TodoList'
 import { 
+  SHOW_ACTIVE,
   SHOW_ALL,
   SHOW_COMPLETED,
-  SHOW_UNCOMPLETED,
-  SHOW_ACTIVE
+  SHOW_UNCOMPLETED
 } from '_constants/visibilityStates'
+
+const sortableContainerProps = visibilityFilter => {
+  return {
+    helperClass: 'onDragging',
+    hideSortableGhost: true,
+    isDragNDropDisabled: visibilityFilter !== SHOW_ALL,
+    lockAxis: 'y',
+    pressDelay: 0,
+    useDragHandle: true
+  }
+}
 
 const getVisibleTodos = (todos, filter, activeTodoId) => {
   switch (filter) {
@@ -29,13 +40,15 @@ const mapStateToProps = (state) => {
       state.todos,
       state.visibilityFilter,
       state.activeTodo.id
-    )
+    ),
+    ...sortableContainerProps(state.visibilityFilter)
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleTodo: (id) => dispatch(toggleTodo(id)),
-    removeTodo: (id) => dispatch(removeTodo(id))
+    onSortEnd: ({oldIndex, newIndex}) => dispatch(reorderTodos(oldIndex, newIndex)),
+    removeTodo: (id) => dispatch(removeTodo(id)),
+    toggleTodo: (id) => dispatch(toggleTodo(id))
   }
 }
 

@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
+import { SortableElement, SortableHandle } from 'react-sortable-hoc';
 
+import TodoText from '_components/TodoText'
 import Timer from '_containers/Timer'
 import {
   CompletedIcon,
@@ -7,13 +9,14 @@ import {
   DeleteIcon
 } from '_icons'
 
-const Todo = ({
-  id,
-  text,
+const Todo = SortableElement(({
   completed,
   elapsedTime,
-  toggleTodo,
-  removeTodo
+  id,
+  isDragNDropDisabled,
+  removeTodo,
+  text,
+  toggleTodo
 }) => (
   <li className={'todo-item'+ (completed ? ' completed' : '')} >
 
@@ -25,12 +28,10 @@ const Todo = ({
       {completed ? <CompletedIcon/> : <UncompletedIcon/>}
     </button>
 
-    <p
-      className={'todo-text'}
-      title={'Click here to start timer'}
-    >
-      <span className="text">{text}</span>
-    </p>
+    <TodoText
+      text={text}
+      isDragNDropDisabled={isDragNDropDisabled}
+    />
 
     <Timer
       id={id}
@@ -43,19 +44,19 @@ const Todo = ({
       title={'Clik it to remove task'}
       onClick={() => removeTodo(id)}
     >
-      {<DeleteIcon/>}
+      <DeleteIcon/>
     </button>
 
   </li>
-)
+))
 
 Todo.propTypes = {
-  id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired,
   elapsedTime: PropTypes.number.isRequired,
-  toggleTodo: PropTypes.func.isRequired,
-  removeTodo: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired,
+  removeTodo: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+  toggleTodo: PropTypes.func.isRequired
 }
 
 export default Todo

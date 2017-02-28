@@ -1,10 +1,13 @@
+import { arrayMove } from 'react-sortable-hoc';
+
 import getUniqId from '_utils/getUniqId'
 import initialState from '_redux/initialState'
 import { 
   ADD_TODO,
-  TOGGLE_TODO,
   REMOVE_TODO,
-  STOP_DO_TODO
+  SORT_TODOS,
+  STOP_DO_TODO,
+  TOGGLE_TODO
  } from '_constants/actions'
 
 const todo = (state = {}, action) => {
@@ -53,6 +56,9 @@ const todos = (state = init, action) => {
       return state.filter(t =>
         t.id !== action.id
       )
+
+    case SORT_TODOS:
+      return arrayMove(state, action.oldIndex, action.newIndex)
 
     default:
       return state

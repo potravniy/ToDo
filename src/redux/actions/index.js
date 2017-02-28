@@ -1,10 +1,11 @@
 import { 
   ADD_TODO,
-  TOGGLE_TODO,
   REMOVE_TODO,
+  SET_VISIBILITY_FILTER,
+  SORT_TODOS,
   START_DO_TODO,
   STOP_DO_TODO,
-  SET_VISIBILITY_FILTER
+  TOGGLE_TODO
  } from '_constants/actions'
 
 export const addTodo = (text) => {
@@ -44,9 +45,16 @@ export const stopDoTodo = (id, elapsedTime) => {
 }
 
 export const setVisibilityFilter = (filter) => {
-
   return {
     type: SET_VISIBILITY_FILTER,
     filter
+  }
+}
+
+export const reorderTodos = (oldIndex, newIndex) => {
+  return {
+    type: SORT_TODOS,
+    oldIndex,
+    newIndex
   }
 }

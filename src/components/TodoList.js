@@ -1,18 +1,28 @@
 import React, { PropTypes } from 'react'
+import { SortableContainer } from 'react-sortable-hoc';
+
 import Todo from '_components/Todo'
 
-const TodoList = ({ todos, toggleTodo, removeTodo }) => (
+const TodoList = SortableContainer(({
+  isDragNDropDisabled,
+  removeTodo,
+  todos,
+  toggleTodo
+}) => (
   <ul className={'todo-list'} >
-    {todos.map(todo =>
+    {todos.map((todo, index) =>
       <Todo
         key={todo.id}
+        index={index}
         {...todo}
         toggleTodo={toggleTodo}
         removeTodo={removeTodo}
+        disabled={isDragNDropDisabled}
+        isDragNDropDisabled={isDragNDropDisabled}
       />
     )}
   </ul>
-)
+))
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.shape({
@@ -21,8 +31,9 @@ TodoList.propTypes = {
     text: PropTypes.string.isRequired,
     elapsedTime: PropTypes.number.isRequired
   }).isRequired).isRequired,
-  toggleTodo: PropTypes.func.isRequired,
-  removeTodo: PropTypes.func.isRequired
+  isDragNDropDisabled: PropTypes.bool.isRequired,
+  removeTodo: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired
 }
 
 export default TodoList
