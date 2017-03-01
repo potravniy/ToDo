@@ -5,8 +5,8 @@ import initialState from '_redux/initialState'
 import { 
   ADD_TODO,
   REMOVE_TODO,
+  SAVE_ACTIVE_TIMER_ELAPSED_TIME,
   SORT_TODOS,
-  STOP_DO_TODO,
   TOGGLE_TODO
  } from '_constants/actions'
 
@@ -19,10 +19,10 @@ const todo = (state = {}, action) => {
         completed: !state.completed
       }
 
-    case STOP_DO_TODO:
+    case SAVE_ACTIVE_TIMER_ELAPSED_TIME:
       return {
         ...state,
-        elapsedTime: action.elapsedTime
+        elapsedTime: state.elapsedTime + Date.now() - action.activeTodoStartTime
       }
 
     default:
@@ -47,7 +47,7 @@ const todos = (state = init, action) => {
       ]
 
     case TOGGLE_TODO:
-    case STOP_DO_TODO:
+    case SAVE_ACTIVE_TIMER_ELAPSED_TIME:
       return state.map(t =>
         t.id === action.id ? todo(t, action) : t
       )

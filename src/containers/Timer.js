@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { isNull } from 'lodash'
+import { isUndefined } from 'lodash'
 import moment from 'moment'
 import 'moment-duration-format'
 
-import { startDoTodo, stopDoTodo } from '_actions'
+import { startDoTodo, stopDoTodo, saveActiveTimerElapsedTime } from '_actions'
 import {
   StartTimerIcon,
   StopTimerIcon
@@ -16,39 +16,32 @@ class Timer extends Component {
     this.state = this.propsToState(props)
   }
   componentDidMount() {
-    if(this.props.isActive) this.startTimer()
+    if(this.props.isThisTodoActive) this.startTimer()
   }
   componentWillReceiveProps(newProps){
     this.setState(this.propsToState(newProps))
-    if(newProps.stopTimer) this.props.stopDoTodo(newProps.id, this.state.timer)
-    else newProps.isActive ? this.startTimer() : this.stopTimer()
+    newProps.deactivateTodo && newProps.deactivateTodo()
+    newProps.isThisTodoActive ? this.startTimer() : this.stopTimer()
   }
   componentWillUnmount() {
     this.stopTimer()
   }
   propsToState = props => ({
-    timer: props.elapsedTime + (props.isActive ? Date.now() - props.startTime : 0)
+    timer: props.elapsedTime
+      + (props.isThisTodoActive ? Date.now() - props.activeTodoStartTime : 0)
   })
-  onTimerClick = () => {
-    if(this.props.isActive) {
-      this.props.stopDoTodo(this.props.id, this.state.timer)
-    } else if(!this.props.completed) {
-      this.props.startDoTodo(this.props.id)
-    }
-  }
-  timerID = null
   startTimer = () => {
-    if(!isNull(this.timerID)) return
+    if(!isUndefined(this.timerID)) return
     this.timerID = setInterval(() => {
       this.setState({
-        timer: this.props.elapsedTime + Date.now() - this.props.startTime
+        timer: this.props.elapsedTime + Date.now() - this.props.activeTodoStartTime
       })
     }, 1000)
   }
   stopTimer = () => {
-    if(isNull(this.timerID)) return
+    if(isUndefined(this.timerID)) return
     clearInterval(this.timerID)
-    this.timerID = null
+    this.timerID = undefined
   }
 
   render() {
@@ -57,57 +50,80 @@ class Timer extends Component {
     return (
       <p
         className={'todo-counter'
-          + (this.props.isActive ? ' run' : '')
+          + (this.props.isThisTodoActive ? ' run' : '')
           + (this.props.completed ? ' non-clicable' : '')}
         title={'Time spent for the task'}
-        onClick={this.onTimerClick}
+        onClick={this.props.onTimerClick}
       >
         {
           this.props.completed ? null :
-            this.props.isActive ? <StopTimerIcon/> : <StartTimerIcon/>
+            this.props.isThisTodoActive ? <StopTimerIcon/> : <StartTimerIcon/>
         }
         {timeString}
       </p>
     )
   }
-
 }
 
 const mapStateToProps = (state, ownProps) => {
-
   const isThisTodoActive = state.activeTodo.id === ownProps.id
-  
-  const isOtherTodoActivating = isThisTodoActive
-    && !isNull(state.activeTodo.nextActiveTodoId)
-  
   const getCompleted = isThisTodoActive && ownProps.completed
   
   return {
-    isActive: isThisTodoActive,
-    startTime: state.activeTodo.startTime,
-    stopTimer: isOtherTodoActivating || getCompleted
+    activeTodoId: state.activeTodo.id,
+    activeTodoStartTime: state.activeTodo.startTime,
+    getCompleted: getCompleted,
+    isThisTodoActive: isThisTodoActive,
+    isThisTodoCompleted: ownProps.completed,
+    thisTodoId: ownProps.id
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const {
+    activeTodoId,
+    activeTodoStartTime,
+    getCompleted,
+    isThisTodoActive,
+    isThisTodoCompleted,
+    thisTodoId
+  } = stateProps
+  const { dispatch } = dispatchProps
+  const activateTodo = () => {
+    dispatch(saveActiveTimerElapsedTime(activeTodoId, activeTodoStartTime))
+    dispatch(startDoTodo(thisTodoId))
+  }
+  const deactivateTodo = () => {
+    dispatch(saveActiveTimerElapsedTime(activeTodoId, activeTodoStartTime))
+    dispatch(stopDoTodo(thisTodoId))
+  }
+  const onTimerClick = isThisTodoCompleted
+    ? null
+    : isThisTodoActive
+      ? deactivateTodo
+      : activateTodo
+
   return {
-    startDoTodo: (id) => dispatch(startDoTodo(id)),
-    stopDoTodo: (id, time) => dispatch(stopDoTodo(id, time))
+    activeTodoStartTime,
+    isThisTodoActive,
+    onTimerClick,
+    deactivateTodo: getCompleted ? deactivateTodo : null,
+    ...ownProps
   }
 }
 
 Timer.propTypes = {
+  activeTodoStartTime: PropTypes.number.isRequired,
   completed: PropTypes.bool.isRequired,
+  deactivateTodo: PropTypes.func,
   elapsedTime: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  startDoTodo: PropTypes.func.isRequired,
-  startTime: PropTypes.number.isRequired,
-  stopDoTodo: PropTypes.func.isRequired,
-  stopTimer: PropTypes.bool.isRequired
+  isThisTodoActive: PropTypes.bool.isRequired,
+  onTimerClick: PropTypes.func
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null,
+  mergeProps
 )(Timer)

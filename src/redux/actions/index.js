@@ -1,6 +1,7 @@
 import { 
   ADD_TODO,
   REMOVE_TODO,
+  SAVE_ACTIVE_TIMER_ELAPSED_TIME,
   SET_VISIBILITY_FILTER,
   SORT_TODOS,
   START_DO_TODO,
@@ -29,6 +30,14 @@ export const toggleTodo = (id) => {
   }
 }
 
+export const saveActiveTimerElapsedTime = (id, activeTodoStartTime) => {
+  return {
+    type: SAVE_ACTIVE_TIMER_ELAPSED_TIME,
+    id,
+    activeTodoStartTime
+  }
+}
+
 export const startDoTodo = (id) => {
   return {
     type: START_DO_TODO,
@@ -36,11 +45,10 @@ export const startDoTodo = (id) => {
   }
 }
 
-export const stopDoTodo = (id, elapsedTime) => {
+export const stopDoTodo = (id) => {
   return {
     type: STOP_DO_TODO,
-    id,
-    elapsedTime
+    id
   }
 }
 

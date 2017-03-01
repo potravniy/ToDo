@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { isNull, findIndex } from 'lodash'
 import { toggleTodo, removeTodo, reorderTodos } from '_actions'
 import TodoList from '_components/TodoList'
 import { 
