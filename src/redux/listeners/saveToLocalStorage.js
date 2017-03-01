@@ -4,8 +4,7 @@ let savedString = window.localStorage.ToDo
   : ''
 
 function saveState(store) {
-  const state = store.getState()
-  const newString = JSON.stringify(state)
+  const newString = JSON.stringify(store.getState())
   if (savedString !== newString) {
     window.localStorage.setItem('ToDo', newString)
     savedString = newString
@@ -13,6 +12,5 @@ function saveState(store) {
 }
 
 export default function onStateChangeListener(store) {
-  saveState(store)
   return store.subscribe(() => { saveState(store) })
 }

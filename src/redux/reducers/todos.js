@@ -46,12 +46,6 @@ const todos = (state = init, action) => {
         }
       ]
 
-    case TOGGLE_TODO:
-    case SAVE_ACTIVE_TIMER_ELAPSED_TIME:
-      return state.map(t =>
-        t.id === action.id ? todo(t, action) : t
-      )
-
     case REMOVE_TODO:
       return state.filter(t =>
         t.id !== action.id
@@ -59,6 +53,12 @@ const todos = (state = init, action) => {
 
     case SORT_TODOS:
       return arrayMove(state, action.oldIndex, action.newIndex)
+
+    case TOGGLE_TODO:
+    case SAVE_ACTIVE_TIMER_ELAPSED_TIME:
+      return state.map(t =>
+        t.id === action.id ? todo(t, action) : t
+      )
 
     default:
       return state

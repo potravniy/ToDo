@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { SortableElement, SortableHandle } from 'react-sortable-hoc';
 
 import TodoText from '_components/TodoText'
-import Timer from '_containers/Timer'
+import PrependTimer from '_containers/PrependTimer'
 import {
   CompletedIcon,
   UncompletedIcon,
@@ -33,7 +33,7 @@ const Todo = SortableElement(({
       isDragNDropDisabled={isDragNDropDisabled}
     />
 
-    <Timer
+    <PrependTimer
       id={id}
       elapsedTime={elapsedTime}
       completed={completed}
