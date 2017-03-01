@@ -65,6 +65,7 @@ h2 {
 }
 .submit {
   margin-right: 0;
+  float: right;
 }
 .icon-btn {
   position: absolute;
