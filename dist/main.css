@@ -127,14 +127,14 @@ h2 {
 .todo-text {
   margin: 0;
   margin-left: 40px;
-  padding: 10px 174px 10px 10px;
+  padding: 10px 194px 10px 10px;
   min-height: 44px;
   font-size: 20px;
   line-height: 27px;
 }
 .todo-counter {
   position: absolute;
-  width: 120px;
+  width: 140px;
   height: 40px;
   top: 0;
   right: 40px;

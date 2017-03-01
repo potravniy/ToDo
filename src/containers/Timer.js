@@ -13,47 +13,32 @@ import {
 class Timer extends Component {
   constructor(props){
     super(props)
-    this.propsToState = props => {
-      if(props.isActive){
-        return {
-          timer: props.elapsedTime + Date.now() - props.startTime,
-          onTimerClick: () => {
-            this.props.stopDoTodo(props.id, this.state.timer)
-          }
-        }
-      } else if(props.completed){
-        return {
-          timer: props.elapsedTime,
-          onTimerClick: null
-        }
-      } else {
-        return {
-          timer: props.elapsedTime,
-          onTimerClick: () => props.startDoTodo(props.id)
-        }
-      }
-    }
     this.state = this.propsToState(props)
   }
   componentDidMount() {
-    if(this.props.isActive && !this.timerID){
-      this.startTimer()
-    }
+    if(this.props.isActive) this.startTimer()
   }
   componentWillReceiveProps(newProps){
     this.setState(this.propsToState(newProps))
-    if(newProps.stopTimer){
-      this.props.stopDoTodo(newProps.id, this.state.timer)
-    } else if(newProps.isActive && !this.timerID){
-      this.startTimer()
-    } else if(!newProps.isActive && this.timerID){
-      this.stopTimer()
-    }
+    if(newProps.stopTimer) this.props.stopDoTodo(newProps.id, this.state.timer)
+    else newProps.isActive ? this.startTimer() : this.stopTimer()
   }
   componentWillUnmount() {
     this.stopTimer()
   }
+  propsToState = props => ({
+    timer: props.elapsedTime + (props.isActive ? Date.now() - props.startTime : 0)
+  })
+  onTimerClick = () => {
+    if(this.props.isActive) {
+      this.props.stopDoTodo(this.props.id, this.state.timer)
+    } else if(!this.props.completed) {
+      this.props.startDoTodo(this.props.id)
+    }
+  }
+  timerID = null
   startTimer = () => {
+    if(!isNull(this.timerID)) return
     this.timerID = setInterval(() => {
       this.setState({
         timer: this.props.elapsedTime + Date.now() - this.props.startTime
@@ -61,22 +46,21 @@ class Timer extends Component {
     }, 1000)
   }
   stopTimer = () => {
+    if(isNull(this.timerID)) return
     clearInterval(this.timerID)
     this.timerID = null
   }
 
   render() {
-    const elapsed = moment.duration(this.state.timer)
-    const timeString = elapsed.asHours() < 1
-                     ? elapsed.format("m:ss")
-                     : elapsed.format("h[h] mm[m]")
+    const timeString = moment.duration(this.state.timer).format("h:mm:ss")
+
     return (
       <p
         className={'todo-counter'
           + (this.props.isActive ? ' run' : '')
           + (this.props.completed ? ' non-clicable' : '')}
         title={'Time spent for the task'}
-        onClick={this.state.onTimerClick}
+        onClick={this.onTimerClick}
       >
         {
           this.props.completed ? null :
@@ -90,17 +74,21 @@ class Timer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const isActive = state.activeTodo.id === ownProps.id
-  const becomeOtherTodoActive = isActive
+
+  const isThisTodoActive = state.activeTodo.id === ownProps.id
+  
+  const isOtherTodoActivating = isThisTodoActive
     && !isNull(state.activeTodo.nextActiveTodoId)
-    && state.activeTodo.nextActiveTodoId !== ownProps.id
-  const getCompleted = isActive && ownProps.completed
+  
+  const getCompleted = isThisTodoActive && ownProps.completed
+  
   return {
-    isActive: isActive,
-    stopTimer: becomeOtherTodoActive || getCompleted,
-    startTime: state.activeTodo.startTime
+    isActive: isThisTodoActive,
+    startTime: state.activeTodo.startTime,
+    stopTimer: isOtherTodoActivating || getCompleted
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
     startDoTodo: (id) => dispatch(startDoTodo(id)),
@@ -109,14 +97,14 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 Timer.propTypes = {
-  id: PropTypes.string.isRequired,
-  elapsedTime: PropTypes.number.isRequired,
   completed: PropTypes.bool.isRequired,
+  elapsedTime: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
-  stopTimer: PropTypes.bool.isRequired,
-  startTime: PropTypes.number.isRequired,
   startDoTodo: PropTypes.func.isRequired,
-  stopDoTodo: PropTypes.func.isRequired
+  startTime: PropTypes.number.isRequired,
+  stopDoTodo: PropTypes.func.isRequired,
+  stopTimer: PropTypes.bool.isRequired
 }
 
 export default connect(

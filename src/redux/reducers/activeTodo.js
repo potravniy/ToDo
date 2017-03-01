@@ -21,12 +21,15 @@ const activeTodo = (state = init, action) => {
           startTime: Date.now(),
           nextActiveTodoId: null
         }
-      } else {
+
+      } else if(state.id !== action.id) {
         return {
           ...state,
           nextActiveTodoId: action.id
         }
-      }
+
+      } else return state
+
 
     case STOP_DO_TODO:
       if(isNull(state.nextActiveTodoId)){
