@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import Timer from '_components/Timer'
+import TimerWrapper from '_components/TimerWrapper'
 import { startDoTodo, stopDoTodo, saveActiveTimerElapsedTime } from '_actions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -44,7 +44,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     isThisTodoActive,
     onTimerClick,
     deactivateTodo: getCompleted ? deactivateTodo : null,
-    ...ownProps
+    elapsedTime: ownProps.elapsedTime,
+    completed: ownProps.completed
   }
 }
 
@@ -52,4 +53,4 @@ export default connect(
   mapStateToProps,
   null,
   mergeProps
-)(Timer)
+)(TimerWrapper)

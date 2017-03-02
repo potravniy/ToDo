@@ -3,12 +3,7 @@ import { isUndefined } from 'lodash'
 import moment from 'moment'
 import 'moment-duration-format'
 
-import {
-  StartTimerIcon,
-  StopTimerIcon
-} from '_icons'
-
-class Timer extends Component {
+class TimerString extends Component {
   constructor(props){
     super(props)
     this.state = this.propsToState(props)
@@ -18,7 +13,6 @@ class Timer extends Component {
   }
   componentWillReceiveProps(newProps){
     this.setState(this.propsToState(newProps))
-    newProps.deactivateTodo && newProps.deactivateTodo()
     newProps.isThisTodoActive ? this.startTimer() : this.stopTimer()
   }
   componentWillUnmount() {
@@ -41,36 +35,19 @@ class Timer extends Component {
     clearInterval(this.timerID)
     this.timerID = undefined
   }
-
   render() {
     const timeString = moment.duration(this.state.timer).format("h:mm:ss")
 
     return (
-      <p
-        className={'todo-counter'
-          + (this.props.isThisTodoActive ? ' run' : '')
-          + (this.props.completed ? ' non-clicable' : '')}
-        title={'Time spent for the task'}
-        onClick={this.props.onTimerClick}
-      >
-        {
-          this.props.completed ? null :
-            this.props.isThisTodoActive ? <StopTimerIcon/> : <StartTimerIcon/>
-        }
-        {timeString}
-      </p>
+      <span> {timeString} </span>
     )
   }
 }
 
-Timer.propTypes = {
+TimerString.propTypes = {
   activeTodoStartTime: PropTypes.number.isRequired,
-  completed: PropTypes.bool.isRequired,
-  deactivateTodo: PropTypes.func,
   elapsedTime: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
-  isThisTodoActive: PropTypes.bool.isRequired,
-  onTimerClick: PropTypes.func
+  isThisTodoActive: PropTypes.bool.isRequired
 }
 
-export default Timer
+export default TimerString
