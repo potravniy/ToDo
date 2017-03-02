@@ -54,6 +54,7 @@ Todo.propTypes = {
   completed: PropTypes.bool.isRequired,
   elapsedTime: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
+  isDragNDropDisabled: PropTypes.bool.isRequired,
   removeTodo: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
   toggleTodo: PropTypes.func.isRequired

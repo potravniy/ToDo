@@ -14,6 +14,7 @@ class TimerString extends Component {
   componentWillReceiveProps(newProps){
     this.setState(this.propsToState(newProps))
     newProps.isThisTodoActive ? this.startTimer() : this.stopTimer()
+    newProps.deactivateTodo && newProps.deactivateTodo()
   }
   componentWillUnmount() {
     this.stopTimer()
@@ -46,6 +47,7 @@ class TimerString extends Component {
 
 TimerString.propTypes = {
   activeTodoStartTime: PropTypes.number.isRequired,
+  deactivateTodo: PropTypes.func,
   elapsedTime: PropTypes.number.isRequired,
   isThisTodoActive: PropTypes.bool.isRequired
 }

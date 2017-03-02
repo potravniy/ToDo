@@ -7,8 +7,6 @@ import {
 } from '_icons'
 
 const TimerWrapper= (props) => {
-  props.deactivateTodo && props.deactivateTodo()
-
     return (
       <p
         className={'todo-counter'
@@ -29,7 +27,6 @@ const TimerWrapper= (props) => {
 
 TimerWrapper.propTypes = {
   completed: PropTypes.bool.isRequired,
-  deactivateTodo: PropTypes.func,
   isThisTodoActive: PropTypes.bool.isRequired,
   onTimerClick: PropTypes.func
 }
