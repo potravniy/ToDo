@@ -1,5 +1,8 @@
 import initialState from '_redux/initialState'
-import { START_DO_TODO, STOP_DO_TODO } from '_constants/actions'
+import {
+  SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_START_DO_TODO,
+  SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_STOP_DO_TODO
+} from '_constants/actions'
 
 const defaultState = {
   id: null,
@@ -11,13 +14,13 @@ const activeTodo = (state = init, action) => {
 
   switch (action.type) {
 
-    case START_DO_TODO:
+    case SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_START_DO_TODO:
       return {
-        id: action.id,
+        id: action.activeTodoId,
         startTime: Date.now()
       }
 
-    case STOP_DO_TODO:
+    case SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_STOP_DO_TODO:
       return defaultState
 
     default:

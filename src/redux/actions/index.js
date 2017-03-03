@@ -1,7 +1,8 @@
 import { 
   ADD_TODO,
   REMOVE_TODO,
-  SAVE_ACTIVE_TIMER_ELAPSED_TIME,
+  SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_START_DO_TODO,
+  SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_STOP_DO_TODO,
   SET_VISIBILITY_FILTER,
   SORT_TODOS,
   START_DO_TODO,
@@ -30,25 +31,21 @@ export const toggleTodo = (id) => {
   }
 }
 
-export const saveActiveTimerElapsedTime = (id, activeTodoStartTime) => {
+export const saveActiveTimerElapsedTimeAndStartDoTodo = (id, activeTodoStartTime, activeTodoId) => {
   return {
-    type: SAVE_ACTIVE_TIMER_ELAPSED_TIME,
+    type: SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_START_DO_TODO,
     id,
-    activeTodoStartTime
+    activeTodoStartTime,
+    activeTodoId
   }
 }
 
-export const startDoTodo = (id) => {
+export const saveActiveTimerElapsedTimeAndStopDoTodo = (id, activeTodoStartTime, activeTodoId) => {
   return {
-    type: START_DO_TODO,
-    id
-  }
-}
-
-export const stopDoTodo = (id) => {
-  return {
-    type: STOP_DO_TODO,
-    id
+    type: SAVE_ACTIVE_TIMER_ELAPSED_TIME_and_STOP_DO_TODO,
+    id,
+    activeTodoStartTime,
+    activeTodoId
   }
 }
 

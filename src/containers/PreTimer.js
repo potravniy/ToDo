@@ -1,7 +1,10 @@
 import { connect } from 'react-redux'
 
 import TimerWrapper from '_components/TimerWrapper'
-import { startDoTodo, stopDoTodo, saveActiveTimerElapsedTime } from '_actions'
+import {
+  saveActiveTimerElapsedTimeAndStartDoTodo,
+  saveActiveTimerElapsedTimeAndStopDoTodo
+} from '_actions'
 
 const mapStateToProps = (state, ownProps) => {
   const isThisTodoActive = state.activeTodo.id === ownProps.id
@@ -26,12 +29,10 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   } = stateProps
   const { dispatch } = dispatchProps
   const activateTodo = () => {
-    dispatch(saveActiveTimerElapsedTime(activeTodoId, activeTodoStartTime))
-    dispatch(startDoTodo(thisTodoId))
+    dispatch(saveActiveTimerElapsedTimeAndStartDoTodo(activeTodoId, activeTodoStartTime, thisTodoId))
   }
   const deactivateTodo = () => {
-    dispatch(saveActiveTimerElapsedTime(activeTodoId, activeTodoStartTime))
-    dispatch(stopDoTodo(thisTodoId))
+    dispatch(saveActiveTimerElapsedTimeAndStopDoTodo(activeTodoId, activeTodoStartTime, thisTodoId))
   }
   const onTimerClick = isThisTodoCompleted
     ? null

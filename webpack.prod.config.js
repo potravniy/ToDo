@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
-  devtool: '#eval-source-map',
+  devtool: 'source-map',
   entry: {
     bundle: './src/index'
   },
@@ -12,6 +12,11 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
     new webpack.optimize.UglifyJsPlugin()
   ],
   resolve: {

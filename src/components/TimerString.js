@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { isUndefined } from 'lodash'
+import { isUndefined, isEqual } from 'lodash'
 import moment from 'moment'
 import 'moment-duration-format'
 
@@ -12,6 +12,7 @@ class TimerString extends Component {
     if(this.props.isThisTodoActive) this.startTimer()
   }
   componentWillReceiveProps(newProps){
+    if(isEqual(this.props, newProps)) return
     this.setState(this.propsToState(newProps))
     newProps.isThisTodoActive ? this.startTimer() : this.stopTimer()
     newProps.deactivateTodo && newProps.deactivateTodo()
